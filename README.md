@@ -2,7 +2,7 @@
 emacs lisp functions to analyze common metres in Sanskrit
 
 ## Provided Functions
-This package currently provides the following interactive functions
+This package currently provides the following interactive function
 - **sktmetrics-context** : analyze a string in region or in a recognized stanza environment metrically
 
 ## Installation
@@ -10,13 +10,13 @@ This package currently provides the following interactive functions
    `(add-to-list 'load-path "/PATH/TO/sanskrit-metrics/")` in your init file,
 2. add `(require 'sanskrit-metrics)` to your init-file,
 3. (optional) append lists with markup you want to include with `(setq LISTNAME (append LISTNAME '("additional string 1" "additional string 2" "…")))` in your init-file; the following lists can be appended:
-   - *sktm_l-beg* : beginning of recognized stanza environment
-   - *sktm_l-end* : end of recognized stanza environment
-   - *sktm_l-plain-elim* : plain text markup to be deleted completely before analysis is performed (doesn't affect input), mostly punctuation
-   - *sktm_l-latex-elim* : LaTeX markup to be deleted completely before analysis is performed (doesn't affect input) like comments, `\footnote{…}`, and `\cite{…}`
-   - *sktm_l-tei-elim* :  TEI markup to be deleted completely before analysis is performed (doesn't affect input) like comments and `<note>…</note>`
-   - *sktm_l-latex-keep* : LaTeX to be reduced to plain content (doesn't affect input) like `\emph{…}`, and `\textbf{…}`
-   - *sktm_l-tei-keep* : TEI markup to be reduced to plain content (doesn't affect input) like `<l>…<l/>`, `<seg>…<seg/>`, and `<hi>…<hi/>`
+   - `sktm_l-beg` : beginning of recognized stanza environment
+   - `sktm_l-end` : end of recognized stanza environment
+   - `sktm_l-plain-elim` : plain text markup to be deleted completely before analysis is performed (doesn't affect input), mostly punctuation
+   - `sktm_l-latex-elim` : LaTeX markup to be deleted completely before analysis is performed (doesn't affect input) like comments, `\footnote{…}`, and `\cite{…}`
+   - `sktm_l-tei-elim` :  TEI markup to be deleted completely before analysis is performed (doesn't affect input) like comments and `<note>…</note>`
+   - `sktm_l-latex-keep` : LaTeX to be reduced to plain content (doesn't affect input) like `\emph{…}`, and `\textbf{…}`
+   - `sktm_l-tei-keep` : TEI markup to be reduced to plain content (doesn't affect input) like `<l>…<l/>`, `<seg>…<seg/>`, and `<hi>…<hi/>`
 
 ## Prerequisites
 - anuṣṭubh stanzas with 4 pādas and āryā stanzas need to be encoded in 2 lines,
@@ -24,7 +24,7 @@ This package currently provides the following interactive functions
 - all other metres should be encoded in 4 lines, 1 per pāda.
 
 ## Usage
-1. Set region (default `M-SPC`) to include the strings you wish to analyze, otherwise the function defaults to the recognized environments specified in *sktm_l-beg* and *sktm_l-end*,
+1. Set region (default `M-SPC`) to include the strings you wish to analyze, otherwise the function defaults to the recognized environments specified in `sktm_l-beg` and `sktm_l-end`,
 2. evaluate the above functions with `M-x sktmetrics-context`,
 3. (optional) if you are frequently using this function, consider [creating a keybinding](https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Commands.html).
 
