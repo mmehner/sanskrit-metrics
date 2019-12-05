@@ -68,6 +68,10 @@ saṃprāpya kīṭayoniṃ caṇḍālasṛtau sukhaṃ patitam	// VRSS_10.49
 \begin{verse}
 divi bhūmau tathākāśe\footnote{Cf. \cite{AuthorYear}.} bahir antaś ca me vibhuḥ |\\
 yo 'vabhāty \emph{avabhāsātmā} tasmai viśvātmane namaḥ || 1,1.1 ||
+% ◡  ◡| —  —| ◡  —  —  —| % A pathyā
+% ◡  ◡| —  —| ◡| —| ◡  —  % B correct
+% —| ◡  —| ◡  ◡  —  —  —| % C pathyā
+% —  —| —  —  ◡  —| ◡  —  % D correct
 \end{verse}
 ```
 

@@ -26,7 +26,9 @@
   (goto-char (point-min))
   (while (re-search-forward "\n[ \t]*% [◡—|][ ◡—|]+.+" nil t)
     (replace-match "" t nil)
-    ))
+    )
+  (goto-char (point-max))
+  )
 
 (defun sktmetrics-narrow ()
   (if mark-active
