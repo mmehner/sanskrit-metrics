@@ -2,10 +2,10 @@
 
 ;; create lists for context awareness and string modifications before analysis, can be appended in init-file
 ;;; matches beginnung of verse: empty line, random LaTeX environment, or TEI linegroup element
-(setq sktm_l-beg '("^\\s-*\n\\s-*" "\\\\begin{[^}\n]+}\\s-*" "<lg[^>]*>\\s-*"))
+(setq sktm_l-beg '("^[ \t]*\n[ \t]*" "\\\\begin{[^}\n]+}[ \t\n]*" "<lg[^>]*>[ \t\n]*"))
 
 ;;; matches end of verse: empty line, random LaTeX environment, or TEI linegroup element
-(setq sktm_l-end '("\n\\s-*\n\\s-*" "\\s-*\\\\end{[^}\n]+}" "[\n\\s-]*</lg>"))
+(setq sktm_l-end '("\n[ \t]*\n[ \t]*" "[ \t\n]+\\\\end{[^}\n]+}" "[^ \t\n]*</lg>"))
 
 ;;; deletions in plain text: GRETIL-styled IDs, punctuation, and numbers
 (setq sktm_l-plain-elim '("\\w+_[0-9,;\.]+" "[\.|0-9,;&]" " /+"))
@@ -22,6 +22,12 @@
 ;;; delete markup but keep content of TEI element: <l>, <seg>, and <hi>
 (setq sktm_l-tei-keep '("<l[^>]*>\\([^<]+\\)</l>" "<seg[^>]*>\\([^<]+\\)</seg>" "<hi[^>]*>\\([^<]+\\)</hi>"))
 
+(defun sktmetrics-revise ()
+  (goto-char (point-min))
+  (while (re-search-forward "\n[ \t]*% [◡—|][ ◡—|]+.+" nil t)
+    (replace-match "" t nil)
+    ))
+
 (defun sktmetrics-narrow ()
   (if mark-active
       (narrow-to-region (region-beginning) (region-end))
@@ -30,6 +36,7 @@
 		      (and (re-search-forward (mapconcat 'identity sktm_l-end "\\|") nil t)
 			 (re-search-backward (mapconcat 'identity sktm_l-end "\\|") nil t))))
   (delete-trailing-whitespace)
+  (sktmetrics-revise)
   (insert-buffer (buffer-name))
   (when (not (equal (line-beginning-position) (point)))
     (insert "\n"))
@@ -64,9 +71,9 @@
 	  (while (re-search-forward (eval (car list)) nil t)
 	    (replace-match (cdr list) t nil))
 	  )
-	'(((concat "\\s-+$\\|^\\s-+\\|^\\s-*\n") . "")
-	   ((concat " +") . "|")
-	  ((concat "^") . "% ")
+	'(((concat "[ \t]+$\\|^[ \t]+\\|^[ \t]*\n") . "")
+	  ((concat " +") . "|")
+	  ((concat "^\\(\\w\\)") . "% \\1")
 	  ;; last syllable of b and d is always counted long
 	  ((concat "\\(^%.+\\)\\(\n%.+\\)\n\\(%.+\\)\\(\n%.+\\)") . "\\1ff\\2zz\n\\3ff\\4zz")
 	  ((concat "\\(%.+[^fz\n]\\)$") . "\\1kk") 
@@ -95,13 +102,10 @@
 	  ("|| " . "||"))
 	)
   (goto-char (point-max))
-  (setq pos (point))
-  (mark-whole-buffer)
   (widen)
-  (indent-for-tab-command)
-  (goto-char pos)
-  (when (not (equal (point) (line-end-position)))
+  (when (and (not (equal (point) (line-end-position))) (not (equal (point) (line-beginning-position))))
     (insert "\n"))
+  (indent-region (re-search-backward (mapconcat 'identity sktm_l-beg "\\|") nil t) (re-search-forward (mapconcat 'identity sktm_l-end "\\|") nil t))
   )
 
 (defun sktmetrics-match-metres ()

@@ -3,7 +3,7 @@ emacs lisp functions to analyze common metres in Sanskrit
 
 ## Provided Functions
 This package currently provides the following interactive function
-- **sktmetrics-context** : analyze a string in region or in a recognized stanza environment metrically
+- **sktmetrics-context** : analyzes a string in region or in a recognized stanza environment metrically; if there is already metrical analysis from a previous run, the function deletes the old analysis first.
 
 ## Installation
 1. Add `sanskrit-metrics.el` to a directory included in the list `load-path` or modify this list to include the directory with
@@ -12,10 +12,10 @@ This package currently provides the following interactive function
 3. (optional) append lists with markup you want to include with `(setq LISTNAME (append LISTNAME '("additional string 1" "additional string 2" "…")))` in your init-file; the following lists can be appended:
    - `sktm_l-beg` : beginning of recognized stanza environment
    - `sktm_l-end` : end of recognized stanza environment
-   - `sktm_l-plain-elim` : plain text markup to be deleted completely before analysis is performed (doesn't affect input), mostly punctuation
-   - `sktm_l-latex-elim` : LaTeX markup to be deleted completely before analysis is performed (doesn't affect input) like comments, `\footnote{…}`, and `\cite{…}`
-   - `sktm_l-tei-elim` :  TEI markup to be deleted completely before analysis is performed (doesn't affect input) like comments and `<note>…</note>`
-   - `sktm_l-latex-keep` : LaTeX to be reduced to plain content (doesn't affect input) like `\emph{…}`, and `\textbf{…}`
+   - `sktm_l-plain-elim` : plain text markup to be deleted before analysis is performed (doesn't affect input), mostly punctuation
+   - `sktm_l-latex-elim` : LaTeX markup to be deleted with content before analysis is performed (doesn't affect input) like comments, `\footnote{…}`, and `\cite{…}`
+   - `sktm_l-tei-elim` :  TEI markup to be deleted with content before analysis is performed (doesn't affect input) like comments and `<note>…</note>`
+   - `sktm_l-latex-keep` : LaTeX markup to be reduced to plain content (doesn't affect input) like `\emph{…}`, and `\textbf{…}`
    - `sktm_l-tei-keep` : TEI markup to be reduced to plain content (doesn't affect input) like `<l>…<l/>`, `<seg>…<seg/>`, and `<hi>…<hi/>`
 
 ## Prerequisites
@@ -29,7 +29,7 @@ This package currently provides the following interactive function
 3. (optional) if you are frequently using this function, consider [creating a keybinding](https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Commands.html).
 
 ## Known issues
-- the analyzis of caesurae is based on visible word boundries alone, which isn't reliable; so most of the output regarding them can be ignored
+- the analysis of caesurae is based on visible word boundaries alone, which isn't reliable; so most of the output regarding them can be ignored
 
 ## Examples (output lines starting with `%`)
 
@@ -65,13 +65,9 @@ saṃprāpya kīṭayoniṃ caṇḍālasṛtau sukhaṃ patitam	// VRSS_10.49
 ### LaTeX
 
 ```latex
-begin{verse}
+\begin{verse}
 divi bhūmau tathākāśe\footnote{Cf. \cite{AuthorYear}.} bahir antaś ca me vibhuḥ |\\
 yo 'vabhāty \emph{avabhāsātmā} tasmai viśvātmane namaḥ || 1,1.1 ||
-% ◡  ◡| —  —| ◡  —  —  —| % A pathyā
-% ◡  ◡| —  —| ◡| —| ◡  —  % B correct
-% —| ◡  —| ◡  ◡  —  —  —| % C pathyā
-% —  —| —  —  ◡  —| ◡  —  % D correct
 \end{verse}
 ```
 
@@ -89,7 +85,7 @@ yo 'vabhāty \emph{avabhāsātmā} tasmai viśvātmane namaḥ || 1,1.1 ||
 ```
 
 ## Recognized metres
-- anuṣṭubh, both pathyā and vipulā
+- anuṣṭubh, both pathyā- and vipulā-pādas a and c
 - samavṛtta:
   - indravajrā
   - upendravajrā
